@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Notes</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 0 auto; padding: 16px; }
+    section { border: 1px solid #ccc; border-radius: 6px; padding: 12px; margin-bottom: 16px; }
+    form { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    input, textarea, select { padding: 6px; font: inherit; }
+    textarea { width: 100%; }
+    li { margin: 6px 0; }
+    li button { margin-left: 6px; }
+    .muted { color: #666; font-size: 0.9em; }
+    .error { color: #b00020; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <h1>Secure Notes</h1>
+  <p id="error" class="error" role="alert"></p>
+
+  <div id="guest">
+    <section>
+      <h2>Login</h2>
+      <form id="login-form">
+        <input name="email" type="email" placeholder="Email" required aria-label="Email">
+        <input name="password" type="password" placeholder="Password" required aria-label="Password">
+        <button>Login</button>
+      </form>
+    </section>
+    <section>
+      <h2>Register</h2>
+      <form id="register-form">
+        <input name="name" placeholder="Name" required aria-label="Name">
+        <input name="email" type="email" placeholder="Email" required aria-label="Email">
+        <input name="password" type="password" placeholder="Password (min 8)" minlength="8" required aria-label="Password">
+        <input name="interests" placeholder="Interests: chess, reading" aria-label="Interests">
+        <button>Register</button>
+      </form>
+    </section>
+  </div>
+
+  <div id="app" hidden>
+    <p>Signed in as <strong id="me"></strong> <button id="logout">Logout</button></p>
+
+    <section>
+      <h2>My notes</h2>
+      <form id="note-form">
+        <input name="title" placeholder="Title" required aria-label="Title">
+        <textarea name="body" rows="3" placeholder="Body" aria-label="Body"></textarea>
+        <input name="id" type="hidden">
+        <button>Save</button>
+        <button type="button" id="note-cancel" hidden>Cancel edit</button>
+      </form>
+      <ul id="notes"></ul>
+      <div id="notes-pager"></div>
+    </section>
+
+    <section>
+      <h2>Posts</h2>
+      <form id="post-form">
+        <input name="title" placeholder="Title" required aria-label="Post title">
+        <textarea name="body" rows="2" placeholder="Body" aria-label="Post body"></textarea>
+        <button>Publish</button>
+      </form>
+      <form id="posts-user-form">
+        <input name="userId" placeholder="User id (empty = me)" aria-label="User id">
+        <button>Show posts</button>
+      </form>
+      <p id="posts-title" class="muted"></p>
+      <ul id="posts"></ul>
+      <div id="posts-pager"></div>
+    </section>
+
+    <section>
+      <h2>Users by interest</h2>
+      <form id="interests-form">
+        <input name="interest" placeholder="Filter, e.g. chess" aria-label="Interest filter">
+        <button>Search</button>
+      </form>
+      <ul id="interests"></ul>
+      <div id="interests-pager"></div>
+    </section>
+
+    <div id="admin" hidden>
+      <section>
+        <h2>Admin: users</h2>
+        <form id="user-form">
+          <input name="name" placeholder="Name" aria-label="Name">
+          <input name="email" type="email" placeholder="Email" aria-label="Email">
+          <input name="password" type="password" placeholder="Password (blank = keep)" aria-label="Password">
+          <input name="interests" placeholder="Interests" aria-label="Interests">
+          <select name="role" aria-label="Role"><option>user</option><option>admin</option></select>
+          <input name="id" type="hidden">
+          <button>Save user</button>
+          <button type="button" id="user-cancel" hidden>Cancel edit</button>
+        </form>
+        <ul id="users"></ul>
+        <div id="users-pager"></div>
+      </section>
+      <section>
+        <h2>Admin: all notes</h2>
+        <ul id="all-notes"></ul>
+        <div id="all-notes-pager"></div>
+      </section>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
