@@ -24,9 +24,10 @@ function el(tag, text, ...children) {
   return node;
 }
 
-function button(label, onClick) {
+function button(label, onClick, className = 'btn-ghost') {
   const b = el('button', label);
   b.type = 'button';
+  b.className = className;
   b.onclick = () => run(onClick);
   return b;
 }
@@ -60,7 +61,7 @@ function pagedList(name, fetchPage, render) {
 }
 
 const loadNotes = pagedList('notes', (p) => api(`/notes?page=${p}`), (n) =>
-  el('li', '', el('strong', n.title), el('div', n.body), button('Edit', () => editNote(n)), button('Delete', () => deleteNote(n._id)))
+  el('li', '', el('strong', n.title), el('div', n.body), button('Edit', () => editNote(n)), button('Delete', () => deleteNote(n._id), 'btn-danger'))
 );
 
 let postsUserId = '';
@@ -72,15 +73,19 @@ const loadPosts = pagedList('posts', async (p) => {
 
 let interestFilter = '';
 const loadInterests = pagedList('interests', (p) => api(`/users/interests?page=${p}&interest=${encodeURIComponent(interestFilter)}`), (g) =>
-  el('li', `${g.interest} (${g.count}): ${g.users.map((u) => u.name).join(', ')}`)
+  el('li', '', el('strong', `${g.interest} (${g.count})`), el('div', g.users.map((u) => u.name).join(', ')))
 );
 
 const loadUsers = pagedList('users', (p) => api(`/admin/users?page=${p}`), (u) =>
-  el('li', `${u.name} <${u.email}> [${u.role}] ${u.interests.join(', ')}  id: ${u._id}`, button('Edit', () => editUser(u)), button('Delete', () => deleteUser(u)))
+  el('li', '',
+    el('strong', `${u.name} · ${u.role}`),
+    el('div', `${u.email} · ${u.interests.join(', ') || 'no interests'} · id ${u._id}`),
+    button('Edit', () => editUser(u)),
+    button('Delete', () => deleteUser(u), 'btn-danger'))
 );
 
 const loadAllNotes = pagedList('all-notes', (p) => api(`/admin/notes?page=${p}`), (n) =>
-  el('li', '', el('strong', n.title), el('span', ` by ${n.owner?.name ?? 'deleted user'}`, el('div', n.body)))
+  el('li', '', el('strong', `${n.title} — by ${n.owner?.name ?? 'deleted user'}`), el('div', n.body))
 );
 
 function editNote(n) {
@@ -189,6 +194,7 @@ function logout() {
   me = null;
   localStorage.removeItem('token');
   $('app').hidden = true;
+  $('userbar').hidden = true;
   $('guest').hidden = false;
 }
 
@@ -197,6 +203,7 @@ function showApp(user) {
   $('me').textContent = `${user.name} (${user.role})`;
   $('guest').hidden = true;
   $('app').hidden = false;
+  $('userbar').hidden = false;
   $('admin').hidden = user.role !== 'admin';
   run(async () => {
     await Promise.all([loadNotes(1), loadPosts(1), loadInterests(1)]);
