@@ -73,8 +73,7 @@ const loadPosts = pagedList('posts', async (p) => {
   return data;
 }, (post) => el('li', '', el('strong', post.title), el('div', post.body)));
 
-let interestFilter = '';
-const loadInterests = pagedList('interests', (p) => api(`/users/interests?page=${p}&interest=${encodeURIComponent(interestFilter)}`), (g) =>
+const loadInterests = pagedList('interests', (p) => api(`/users/interests?page=${p}`), (g) =>
   el('li', '', el('strong', `${g.interest} (${g.count})`), el('div', g.users.map((u) => u.name).join(', ')))
 );
 
@@ -174,11 +173,6 @@ onSubmit('post-form', async (f) => {
 onSubmit('posts-user-form', async (f) => {
   postsUserId = f.userId.value.trim();
   await loadPosts(1);
-});
-
-onSubmit('interests-form', async (f) => {
-  interestFilter = f.interest.value.trim();
-  await loadInterests(1);
 });
 
 onSubmit('user-form', async (f) => {
