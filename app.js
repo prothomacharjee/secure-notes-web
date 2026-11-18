@@ -118,12 +118,21 @@ function editUser(u) {
   f.interests.value = u.interests.join(', ');
   f.role.value = u.role;
   f.id.value = u._id;
+  setPasswordMode(true);
   $('user-cancel').hidden = false;
+}
+
+// Password is required when creating a user; when editing, blank keeps the current one.
+function setPasswordMode(editing) {
+  const p = $('user-form').password;
+  p.required = !editing;
+  p.placeholder = editing ? 'Password (blank = keep)' : 'Password (min 8)';
 }
 
 function resetUserForm() {
   $('user-form').reset();
   $('user-form').id.value = '';
+  setPasswordMode(false);
   $('user-cancel').hidden = true;
 }
 

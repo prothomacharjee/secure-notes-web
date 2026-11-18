@@ -44,7 +44,7 @@
       <section>
         <h2>Login</h2>
         <form id="login-form" class="flex-col">
-          <input name="email" type="email" placeholder="Email" required aria-label="Email">
+          <input name="email" type="email" placeholder="Email" required maxlength="254" aria-label="Email">
           <input name="password" type="password" placeholder="Password" required aria-label="Password">
           <p class="err" role="alert"></p>
           <button>Login</button>
@@ -53,8 +53,8 @@
       <section>
         <h2>Create account</h2>
         <form id="register-form" class="flex-col">
-          <input name="name" placeholder="Name" required aria-label="Name">
-          <input name="email" type="email" placeholder="Email" required aria-label="Email">
+          <input name="name" placeholder="Name" required maxlength="100" aria-label="Name">
+          <input name="email" type="email" placeholder="Email" required maxlength="254" aria-label="Email">
           <input name="password" type="password" placeholder="Password (min 8)" minlength="8" required aria-label="Password">
           <input name="interests" placeholder="Interests: chess, reading" aria-label="Interests">
           <p class="err" role="alert"></p>
@@ -67,8 +67,8 @@
       <section>
         <h2>My notes</h2>
         <form id="note-form">
-          <input name="title" placeholder="Title" required aria-label="Title">
-          <textarea name="body" rows="3" placeholder="Write something…" aria-label="Body"></textarea>
+          <input name="title" placeholder="Title" required maxlength="200" aria-label="Title">
+          <textarea name="body" rows="3" required maxlength="10000" placeholder="Write something…" aria-label="Body"></textarea>
           <input name="id" type="hidden">
           <p class="err" role="alert"></p>
           <button>Save note</button>
@@ -82,8 +82,8 @@
         <section>
           <h2>Posts</h2>
           <form id="post-form">
-            <input name="title" placeholder="Post title" required aria-label="Post title">
-            <textarea name="body" rows="2" placeholder="Share with everyone…" aria-label="Post body"></textarea>
+            <input name="title" placeholder="Post title" required maxlength="200" aria-label="Post title">
+            <textarea name="body" rows="2" required maxlength="10000" placeholder="Share with everyone…" aria-label="Post body"></textarea>
             <p class="err" role="alert"></p>
             <button>Publish</button>
           </form>
@@ -114,9 +114,9 @@
         <section>
           <h2>Users</h2>
           <form id="user-form">
-            <input name="name" placeholder="Name" aria-label="Name">
-            <input name="email" type="email" placeholder="Email" aria-label="Email">
-            <input name="password" type="password" placeholder="Password (blank = keep)" aria-label="Password">
+            <input name="name" placeholder="Name" required maxlength="100" aria-label="Name">
+            <input name="email" type="email" placeholder="Email" required maxlength="254" aria-label="Email">
+            <input name="password" type="password" placeholder="Password (min 8)" minlength="8" required aria-label="Password">
             <input name="interests" placeholder="Interests" aria-label="Interests">
             <select name="role" aria-label="Role"><option>user</option><option>admin</option></select>
             <input name="id" type="hidden">
