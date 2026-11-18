@@ -16,6 +16,7 @@
       button { @apply rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 cursor-pointer transition; }
       .btn-ghost { @apply bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-100 px-3 py-1; }
       .btn-danger { @apply bg-white text-red-600 ring-1 ring-red-200 hover:bg-red-50 px-3 py-1; }
+      .err { @apply w-full text-sm text-red-600 empty:hidden; }
       ul { @apply space-y-2; }
       li { @apply rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700; }
       li > strong { @apply block text-slate-900; }
@@ -45,6 +46,7 @@
         <form id="login-form" class="flex-col">
           <input name="email" type="email" placeholder="Email" required aria-label="Email">
           <input name="password" type="password" placeholder="Password" required aria-label="Password">
+          <p class="err" role="alert"></p>
           <button>Login</button>
         </form>
       </section>
@@ -55,6 +57,7 @@
           <input name="email" type="email" placeholder="Email" required aria-label="Email">
           <input name="password" type="password" placeholder="Password (min 8)" minlength="8" required aria-label="Password">
           <input name="interests" placeholder="Interests: chess, reading" aria-label="Interests">
+          <p class="err" role="alert"></p>
           <button>Register</button>
         </form>
       </section>
@@ -67,6 +70,7 @@
           <input name="title" placeholder="Title" required aria-label="Title">
           <textarea name="body" rows="3" placeholder="Write something…" aria-label="Body"></textarea>
           <input name="id" type="hidden">
+          <p class="err" role="alert"></p>
           <button>Save note</button>
           <button type="button" id="note-cancel" class="btn-ghost" hidden>Cancel edit</button>
         </form>
@@ -80,10 +84,12 @@
           <form id="post-form">
             <input name="title" placeholder="Post title" required aria-label="Post title">
             <textarea name="body" rows="2" placeholder="Share with everyone…" aria-label="Post body"></textarea>
+            <p class="err" role="alert"></p>
             <button>Publish</button>
           </form>
           <form id="posts-user-form">
             <input name="userId" placeholder="User id (empty = me)" aria-label="User id">
+            <p class="err" role="alert"></p>
             <button class="btn-ghost">Show posts</button>
           </form>
           <p id="posts-title" class="mb-2 text-xs text-slate-500"></p>
@@ -95,6 +101,7 @@
           <h2>Users by interest</h2>
           <form id="interests-form">
             <input name="interest" placeholder="Filter, e.g. chess" aria-label="Interest filter">
+            <p class="err" role="alert"></p>
             <button class="btn-ghost">Search</button>
           </form>
           <ul id="interests"></ul>
@@ -113,6 +120,7 @@
             <input name="interests" placeholder="Interests" aria-label="Interests">
             <select name="role" aria-label="Role"><option>user</option><option>admin</option></select>
             <input name="id" type="hidden">
+            <p class="err" role="alert"></p>
             <button>Save user</button>
             <button type="button" id="user-cancel" class="btn-ghost" hidden>Cancel edit</button>
           </form>
@@ -121,6 +129,7 @@
         </section>
         <section>
           <h2>All notes</h2>
+          <p class="err" role="alert"></p>
           <ul id="all-notes"></ul>
           <div id="all-notes-pager"></div>
         </section>

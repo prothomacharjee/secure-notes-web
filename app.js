@@ -28,16 +28,18 @@ function button(label, onClick, className = 'btn-ghost') {
   const b = el('button', label);
   b.type = 'button';
   b.className = className;
-  b.onclick = () => run(onClick);
+  b.onclick = () => run(onClick, b);
   return b;
 }
 
-async function run(fn) {
-  $('error').textContent = '';
+// Show errors next to the form/card the action came from; top banner is the fallback.
+async function run(fn, from) {
+  const box = from?.closest('form')?.querySelector('.err') ?? from?.closest('section')?.querySelector('.err') ?? $('error');
+  document.querySelectorAll('.err, #error').forEach((n) => (n.textContent = ''));
   try {
     await fn();
   } catch (e) {
-    $('error').textContent = e.message;
+    box.textContent = e.message;
   }
 }
 
@@ -134,7 +136,7 @@ async function deleteUser(u) {
 function onSubmit(id, handler) {
   $(id).onsubmit = (e) => {
     e.preventDefault();
-    run(() => handler(e.target));
+    run(() => handler(e.target), e.target);
   };
 }
 
